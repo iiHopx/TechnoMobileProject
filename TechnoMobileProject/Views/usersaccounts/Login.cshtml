@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TechnoMobile</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TechnoMobile.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            background-image: url('/images/s.png');
+            background: cover no-repeat fixed;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .logindiv {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+        }
+
+        .card {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+        }
+        /* Button positioning */
+        #upButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
+        }
+
+            #upButton:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logindiv">
+            <div class="card" style="max-width: 400px;">
+                <div class="card-body">
+                    <h5 class="card-title text-center" style="color: darkslategrey">Login TechnoMobile</h5>
+                    <form asp-action="Login" method="post">
+                        <div class="mb-3">
+                            <label for="na" class="form-label" style="color: darkslategrey">User Name</label>
+                            <input type="text" name="na" id="na" class="form-control" placeholder="Username" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="pa" class="form-label" style="color: darkslategrey">Password</label>
+                            <input type="password" name="pa" id="pa" class="form-control" placeholder="Password" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+
+                        <input type="checkbox" name="auto" style="margin-top: 15px;" />
+
+                        <label for="auto" class="form-label" style="color: darkslategrey">Auto login</label>
+                        <br />
+                        <form>
+                            <label class="form-check-label mb-4">
+                                <p style="margin: 0; padding: 0;">
+                                    <span style="color: black;">Don't have an account?</span>
+                                    <a href="registration" class="fw-bold text-muted">
+                                        <u>Click here!</u>
+                                    </a>
+                                </p>
+                            </label>
+                        </form>
+                        @if (TempData["Message"] != null)
+                        {
+                            <div class="alert alert-danger">
+                                @TempData["Message"]
+                            </div>
+                            ViewData["TempCleared"] = TempData.Remove("Message"); // ensures nulls TempData
+                        }
+</body>
+</html>

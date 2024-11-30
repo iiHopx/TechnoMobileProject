@@ -1,0 +1,120 @@
+﻿@model TechnoMobileProject.Models.usersaccounts
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TechnoMobile</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TechnoMobile.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            background-image: url('/images/Reg1.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+        }
+
+      
+
+         
+
+              
+        .logindiv {
+            background-color: rgba(0, 0, 0, 0.6); 
+            color: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            margin: 0 auto;
+            margin-top: 80px;
+        }
+
+        .card {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group label {
+            color: floralwhite;
+        }
+
+        .form-group input {
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background-color:darkslategrey;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+  
+  
+
+    <div class="logindiv">
+        <h5 class="card-title text-center" style="color: floralwhite;">Register for TechnoMobile</h5>
+        <form asp-action="Registration" method="post">
+            <div class="form-group">
+                <label for="name">Username</label>
+                <input asp-for="name" class="form-control" placeholder="Enter your username" required />
+            </div>
+
+            <div class="form-group">
+                <label for="pass">Password</label>
+                <input asp-for="pass" type="password" class="form-control" placeholder="Enter your password" required />
+            </div>
+
+            <div class="form-group">
+                <label for="matchingpassword">Confirm Password</label>
+                <input name="matchingpassword" type="password" class="form-control" placeholder="Confirm your password" required />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input name="email" type="email" class="form-control" placeholder="Enter your email" required />
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input name="age" class="form-control" type="number" placeholder="Enter your age" min="12" max="90" required />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary w-100" />
+            </div>
+            <label class="form-check-label mt-4 mb-4 ">
+              Have an account ?
+                <a href="login" class="fw-bold text-green"><u>Click here !</u></a>
+            </label>
+        </form>
+        <div style="color:red; text-align:center;">
+            @ViewData["Message"]
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TechnoMobile</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TechnoMobile.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            background-image: url('/images/Reg5.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden; /* Prevent scrolling */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1; /* Push footer to bottom */
+        }
+
+        .logindiv {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            width: 50%;
+            height: auto;
+            min-height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            margin-top: 10px;
+        }
+
+        footer {
+            background-color: #343a40; /* Match layout color */
+            color: white;
+            padding: 10px 0;
+        }
+
+            footer a {
+                color: #ffffff;
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-black" style="background-color: #343a40;">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">TechnoMobileProject</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="logindiv">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center" style="color: darkslategrey">Add Admin TechnoMobile</h5>
+                    <form asp-action="Addadmin" method="post">
+                        <div class="mb-3">
+                            <label for="na" class="form-label" style="color: darkslategrey">User Name</label>
+                            <input type="text" name="name" id="na" class="form-control" placeholder="Username" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="pa" class="form-label" style="color: darkslategrey">Password</label>
+                            <input type="password" name="pass" id="pa" class="form-control" placeholder="Password" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="matchingpassword" style="color: darkslategrey">Confirm Password</label>
+                            <input name="matchingpassword" type="password" class="form-control" placeholder="Confirm your password" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Add Admin</button>
+                    </form>
+
+                    @if (ViewData["Message"] != null)
+                    {
+                        <div class="alert alert-danger mt-3">
+                            @ViewData["Message"]
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="border-top footer">
+        <div class="text-center">
+            &copy; 2024 - TechnoMobileProject - <a href="@Url.Action("Privacy", "Home")" class="text-light">Privacy</a>
+        </div>
+    </footer>
+</body>
+</html>
