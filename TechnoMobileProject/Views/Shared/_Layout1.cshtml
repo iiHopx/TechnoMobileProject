@@ -32,6 +32,9 @@
         /* Adjust body content to avoid overlap with fixed navbar */
         body {
             margin-top: 60px; /* Add space for the fixed navbar */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure the body takes at least the full height of the screen */
         }
 
         .navbar-toggler-icon {
@@ -50,49 +53,52 @@
                     color: #007bff; /* Lighten the hover effect */
                 }
 
-      
+        /* Footer Styling */
+        footer {
+            background-color: white;
+            padding: 10px 0;
+            margin-top: auto; /* Push footer to the bottom of the page */
+        }
+
+            footer .container-fluid {
+                padding: 10px;
+            }
+
+            footer .text-center {
+                text-align: left; /* Align text to the left */
+            }
+
+        /* Remove any extra space below the footer */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light">
             <div class="container-fluid">
-
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/images/logos.png" alt="TechnoMobile Logo" style="height: 60px; width: auto;" />
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                </a>                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1 d-flex">
+                    <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white " asp-area="" asp-controller="usersaccounts" asp-action="Index">Home</a>
+                            <a class="nav-link text-white " asp-area="" asp-controller="usersaccounts" asp-action="customerHome">Home</a>
                         </li>
+                      
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="usersaccounts" asp-action="Addadmin">Add Admin</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="usersaccounts" asp-action="email">Send Email</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="usersaccounts" asp-action="Index">User Management</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="items" asp-action="Index">Manage Items</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="usersaccounts" asp-action="users_search">User Search</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="items" asp-action="dash">Dashboard</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="items" asp-action="list">List</a>
                         </li>
                         <li class="nav-item ms-auto">
                             <a class="nav-link text-white btn btn-danger" asp-controller="usersaccounts" asp-action="Logout">Logout</a>
                         </li>
                     </ul>
-
                 </div>
             </div>
         </nav>
@@ -104,14 +110,13 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container-fluid" style="background-color: white; padding: 10px;">
+        <div class="container-fluid">
             <div class="text-center">
                 &copy; 2024 - TechnoMobileProject - <a href="@Url.Action("Privacy", "Home")" class="text-dark">Privacy</a>
+                <p>Contact us at: Email: support@technomobile.com | Tel: +050000000</p>
             </div>
         </div>
     </footer>
-
-
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

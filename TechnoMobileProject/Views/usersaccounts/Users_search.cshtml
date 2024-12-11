@@ -1,0 +1,171 @@
+﻿@model TechnoMobileProject.Models.usersaccounts
+@{
+    ViewData["Title"] = "Users Search";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Google Font for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            background-color: #f4f4f9;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 500;
+            color: #444;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin-top: 60px;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            box-shadow: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn-default {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+        }
+
+        .dl-row dt {
+            font-weight: 500;
+            color: #444;
+        }
+
+        .dl-row dd {
+            padding-left: 10px;
+            color: #555;
+        }
+
+
+
+            .container {
+                padding: 10px;
+                margin-top: 40px;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Search</h1>
+        <div class="form-container">
+            <form asp-action="Users_search" method="post">
+                <div class="form-group">
+                    <label class="control-label">Select Category</label>
+                    <select class="form-control" name="cata" id="ca" onchange="gettitle()">
+                        <option value="0">Please select</option>
+                        <option value="admin">Admin</option>
+                        <option value="customer">Customer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Select Title</label>
+                    <select class="form-control" name="name" id="ti"></select>
+                </div>
+                <input type="submit" value="Show" class="btn btn-default mt-3" />
+            </form>
+
+        <hr />
+
+        <dl class="row dl-row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(Model => Model.name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model => Model.name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(Model => Model.pass)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model => Model.pass)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(Model => Model.role)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model => Model.role)
+            </dd>
+        </dl>
+    </div>
+            </div>
+
+    <!-- Bootstrap JS (for Bootstrap components that require JS) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        async function gettitle() {
+            var cc = document.getElementById('ca').value;
+            var response = await fetch('/getname/' + cc);
+            let x = await response.json();
+            var dd = "<option>Please select</option>";
+            for (i = 0; i < x.length; i++) {
+                dd += "<option>" + x[i].title + "</option>"; // Access `name`
+            }
+            document.getElementById("ti").innerHTML = dd;
+        }
+    </script>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Edit user info</a>
+        <a asp-action="Index" class="btn btn-secondary">All users</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿@model TechnoMobileProject.Models.items
+
+@{
+    ViewData["Title"] = "Details";
+}
+<style>
+  
+    .form-container {
+        background-color: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+        margin: 20px auto;
+        min-height: 500px;
+    }
+</style>
+
+<div class="form-container">
+    <h1 class="mb-3">Details</h1>
+    <h4 class="text-muted">Item Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.title)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.title)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.info)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.info)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.price)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.price)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.discount)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.discount)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.pubdate)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.pubdate)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.category)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.category)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.bookquantity)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.bookquantity)</dd>
+
+        <dt class="col-sm-3">Mobile Picture</dt>
+        <dd class="col-sm-9">
+            <img src="~/images/@Model.imgfile" height="150" />
+            <br />@Model.imgfile
+        </dd>
+    </dl>
+
+    <div class="text-end">
+       
+        <a asp-action="List" class="btn btn-secondary ms-2">Back to List</a>
+    </div>
+</div>

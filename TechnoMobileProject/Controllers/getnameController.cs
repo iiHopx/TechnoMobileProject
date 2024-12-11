@@ -5,7 +5,7 @@ using TechnoMobileProject.Models;
 
 namespace TechnoMobileProject.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class getnameController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace TechnoMobileProject.Controllers
             {
                 users.Add(new myUsers
                 {
-                    title = (string)reader["title"],
+                    title = (string)reader["name"],
                 });
             }
             reader.Close();

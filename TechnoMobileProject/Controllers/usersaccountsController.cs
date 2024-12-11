@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -61,23 +64,23 @@ namespace TechnoMobileProject.Controllers
 
                 if (pa == pass)
                 {
-                    TempData["Message"] = null; // Clear the message
+                    ViewData["Message"] = null; // Clear the message
                     if (ro == "customer")
-                        return RedirectToAction("Index");
+                        return RedirectToAction("customerHome");
                     else if (ro == "admin")
-                        return RedirectToAction("usersaccounts", "Login");
+                        return RedirectToAction(nameof(Index));
                     else
                         return View();
                 }
                 else
                 {
-                    TempData["Message"] = "Incorrect password.";
+                    ViewData["Message"] = "Incorrect password.";
                     return View();
                 }
             }
             else
             {
-                TempData["Message"] = "Incorrect username or not found.";
+                ViewData["Message"] = "Incorrect username or not found.";
                 return View();
             }
         }
@@ -124,26 +127,38 @@ namespace TechnoMobileProject.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-
+   
         public async Task<IActionResult> Index()
         {
+            string roles = HttpContext.Session.GetString("Role");
+
             string userName = HttpContext.Session.GetString("Name");
 
-
+            if (roles == "admin") { 
             ViewData["message"] = "Welcome Admin : " + userName;
 
             // Return the view with the list of users
             return View(await _context.usersaccounts.ToListAsync());
+            }
+            else
+                return RedirectToAction(nameof(login));
         }
+
         public IActionResult Addadmin(usersaccounts cli)
         {
+            string roles = HttpContext.Session.GetString("Role");
+            if (roles != "admin")
+            {
+                return RedirectToAction(nameof(login)); // Redirect to login if not admin
+            }else
             return View();
         }
 
         [HttpPost]
         public IActionResult Addadmin(usersaccounts cle, string matchingpassword)
         {
-
+            string roles = HttpContext.Session.GetString("Role");
+        
             if (cle.pass != matchingpassword)
             {
                 ViewData["Message"] = "Passwords do not match.";
@@ -164,7 +179,8 @@ namespace TechnoMobileProject.Controllers
             TempData["SuccessMessage"] = "Admin added successfully.";
 
             return RedirectToAction(nameof(Index)); // Redirect after successful addition
-        }
+            }
+        
         public IActionResult Users_search()
         {
             HttpContext.Session.LoadAsync();
@@ -177,14 +193,14 @@ namespace TechnoMobileProject.Controllers
             return View(users);
             }
         [HttpPost]
-        public async Task<IActionResult> Users_Search(string name) {
+        public async Task<IActionResult> Users_search(string name) {
             HttpContext.Session.LoadAsync();
             string role = HttpContext.Session.GetString("Role");
             if (role != "admin")
             {
                 return RedirectToAction("login", "usersaccounts");
             }
-            var getnames = await _context.usersaccounts.FromSqlRaw("select * from where name='" + name + "'").FirstOrDefaultAsync();
+            var getnames = await _context.usersaccounts.FromSqlRaw("select * from usersaccounts where name='" + name + "'").FirstOrDefaultAsync();
             return View(getnames);
 
         }
@@ -207,6 +223,45 @@ namespace TechnoMobileProject.Controllers
 
             return View(usersaccounts);
         }
+        public IActionResult email()
+        {
+            string role = HttpContext.Session.GetString("Role");
+
+            if (role != "admin")
+            {
+                return RedirectToAction("login", "usersaccounts");
+            }
+            else
+                return View();
+        }
+        [HttpPost, ActionName("email")]
+        [ValidateAntiForgeryToken]
+        public IActionResult email(string address,string subject,string body)
+        {
+            string role = HttpContext.Session.GetString("Role");
+
+            if (role != "admin")
+            {
+                return RedirectToAction("login", "usersaccounts");
+            }
+            
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            var mail = new MailMessage();
+            mail.From = new MailAddress("iihopx87@gmail.com");
+            mail.To.Add(address); // receiver email address
+            mail.Subject = subject;
+            mail.IsBodyHtml = true;
+            mail.Body = body;
+            SmtpServer.Port = 587;
+            SmtpServer.UseDefaultCredentials = false;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("iihopx87@gmail.com", "thhhvllrrwxtpbii");
+            SmtpServer.EnableSsl = true;
+            SmtpServer.Send(mail);
+            ViewData["Message"] = "Email sent.";
+            return View();
+
+        }
+
 
         // GET: usersaccounts/Create
         public IActionResult Create()
@@ -298,7 +353,33 @@ namespace TechnoMobileProject.Controllers
 
             return View(usersaccounts);
         }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
 
+            if (HttpContext.Request.Cookies.ContainsKey("Name"))
+            {
+                HttpContext.Response.Cookies.Delete("Name");
+            }
+            if (HttpContext.Request.Cookies.ContainsKey("Role"))
+            {
+                HttpContext.Response.Cookies.Delete("Role");
+            }
+
+            return RedirectToAction(nameof(login));
+        }
+        public async Task<IActionResult> customerHome()
+        {
+            HttpContext.Session.LoadAsync();
+            string role = HttpContext.Session.GetString("Role");
+            if (role == "customer")
+            {
+                ViewData["name"] = HttpContext.Session.GetString("Name");
+                var discount = await _context.items.Where(b => b.discount == "yes").ToListAsync();
+                return View(discount);
+            }else
+                return RedirectToAction(nameof(login));
+        }
         // POST: usersaccounts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        .card {
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.03);
+        }
+        .card-header {
+            padding: 10px;
+            font-weight: 600;
+        }
+        .card-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+        .card-body img {
+            max-width: 40px;
+            max-height: 40px;
+            object-fit: contain;
+        }
+        .card-footer {
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .col-md-3 {
+            flex: 0 0 calc(25% - 20px);
+            max-width: calc(25% - 20px);
+        }
+       
+    </style>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Category');
+            data.addColumn('number', 'Books');
+            data.addRows([
+                ['iPhone', @ViewData["d1"]],
+                ['Samsung', @ViewData["d2"]],
+                ['Google', @ViewData["d3"]],
+                ['OnePlus', @ViewData["d4"]],
+                ['Xiaomi', @ViewData["d5"]],
+                ['Huawei', @ViewData["d6"]],
+                ['Oppo', @ViewData["d7"]],
+                ['Vivo', @ViewData["d8"]],
+                ['Sony', @ViewData["d9"]],
+                ['LG', @ViewData["d10"]],
+                ['Nokia', @ViewData["d11"]],
+                ['Realme', @ViewData["d12"]],
+                ['Asus', @ViewData["d13"]],
+                ['Lenovo', @ViewData["d14"]],
+                ['Honor', @ViewData["d15"]],
+                ['BlackBerry', @ViewData["d16"]]
+            ]);
+            var options = {
+                'title': 'Number of  Available Models according to companies',
+                'width': 800,
+                'height': 500
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <div id="chart_div"></div>
+    <div class="row">
+        @for (int i = 1; i <= 16; i++)
+        {
+            string categoryName = "";
+            if (i == 1) categoryName = "iPhone";
+            else if (i == 2) categoryName = "Samsung";
+            else if (i == 3) categoryName = "Google";
+            else if (i == 4) categoryName = "OnePlus";
+            else if (i == 5) categoryName = "Xiaomi";
+            else if (i == 6) categoryName = "Huawei";
+            else if (i == 7) categoryName = "Oppo";
+            else if (i == 8) categoryName = "Vivo";
+            else if (i == 9) categoryName = "Sony";
+            else if (i == 10) categoryName = "LG";
+            else if (i == 11) categoryName = "Nokia";
+            else if (i == 12) categoryName = "Realme";
+            else if (i == 13) categoryName = "Asus";
+            else if (i == 14) categoryName = "Lenovo";
+            else if (i == 15) categoryName = "Honor";
+            else if (i == 16) categoryName = "BlackBerry";
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-warning text-center">@categoryName</div>
+                    <div class="card-body">
+                        <img src="@Url.Content($"~/images/cata{i}.png")"   alt="Category Image" class="img-fluid" />
+                    </div>
+                    <div class="card-footer">
+                        Models Available : <div>@ViewData[$"d{i}"]</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</body>
+</html>

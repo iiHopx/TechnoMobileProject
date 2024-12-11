@@ -1,0 +1,156 @@
+﻿@model TechnoMobileProject.Models.items
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<style>
+    body {
+        background-color: #f5f5f5;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: darkslategrey;
+    }
+
+    .form-container {
+        background-color: white;
+        padding: 8px; 
+        border-radius: 8px;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 450px;
+        margin: 5px auto; 
+        min-height: 200px;
+    }
+
+    .form-group {
+        margin-bottom: 6px; 
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 3px;
+    }
+
+    h4 {
+        font-size: 1rem;
+        margin-bottom: 3px;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 8px 0; 
+        opacity: 0.5;
+    }
+
+    .form-control, .form-select {
+        padding: 4px 8px; 
+        font-size: 13px; 
+        height: 32px; 
+    }
+
+    textarea.form-control {
+        height: auto; 
+        min-height: 60px; 
+    }
+
+    .form-check {
+        margin-bottom: 2px; 
+    }
+    h1, h4 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    img {
+        max-height: 100px; 
+        object-fit: cover;
+        margin-bottom: 5px;
+    }
+</style>
+<div class="form-container mt-5" >
+    <h1 class="mb-3">Edit</h1>
+    <h4 class="text-muted">Edit Item Details</h4>
+    <hr />
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-group mb-2">
+            <label asp-for="title" class="control-label fw-bold">Phone Name</label>
+            <input asp-for="title" class="form-control" placeholder="Enter phone name" />
+            <span asp-validation-for="title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="info" class="control-label fw-bold">Specifications</label>
+            <textarea asp-for="info" class="form-control" rows="2" placeholder="Enter specs"></textarea>
+            <span asp-validation-for="info" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="price" class="control-label fw-bold">Price</label>
+            <input asp-for="price" class="form-control" placeholder="Enter price" />
+            <span asp-validation-for="price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="discount" class="control-label fw-bold">Discount</label>
+            <div class="form-check">
+                <input type="radio" asp-for="discount" value="yes" class="form-check-input" />
+                <label class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" asp-for="discount" value="no" class="form-check-input" />
+                <label class="form-check-label">No</label>
+            </div>
+            <span asp-validation-for="discount" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="pubdate" class="control-label fw-bold">Production Year</label>
+            <input asp-for="pubdate" class="form-control" asp-format="{0:dd/MM/yyyy}" placeholder="Enter year" />
+            <span asp-validation-for="pubdate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label class="control-label fw-bold">Category</label>
+            <select class="form-control" asp-for="category">
+                <option value="0">Please select</option>
+                <option value="1">iPhone</option>
+                <option value="2">Samsung</option>
+                <option value="3">Google</option>
+                <option value="4">OnePlus</option>
+                <option value="5">Xiaomi</option>
+                <option value="6">Huawei</option>
+                <option value="7">Oppo</option>
+                <option value="8">Vivo</option>
+                <option value="9">Sony</option>
+                <option value="10">LG</option>
+                <option value="11">Nokia</option>
+                <option value="12">Realme</option>
+                <option value="13">Asus</option>
+                <option value="14">Lenovo</option>
+                <option value="15">Honor</option>
+                <option value="16">BlackBerry</option>
+            </select>
+            <span asp-validation-for="category" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="bookquantity" class="control-label fw-bold">Quantity</label>
+            <input asp-for="bookquantity" class="form-control" placeholder="Enter quantity" />
+            <span asp-validation-for="bookquantity" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="control-label fw-bold">Picture</label>
+            <img src="~/images/@Model.imgfile" height="150" class="d-block mb-2" />
+            <input type="hidden" asp-for="imgfile" />
+            <input type="file" class="form-control" name="file" />
+        </div>
+
+        <div class="form-group text-end">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+        </div>
+    </form>
+</div>
