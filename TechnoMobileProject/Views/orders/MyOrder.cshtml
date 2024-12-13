@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "_Layout1";
+}
+@model IEnumerable<TechnoMobileProject.Models.orders>
+
+<style>
+    body {
+        background-color: #f0f2f5;
+        margin: 0;
+        color: #333;
+    }
+
+    .orders-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+
+    .orders-grid {
+        display: grid;
+        gap: 20px;
+    }
+
+    .order-card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #e9ecef;
+    }
+
+
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #f1f3f5;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .order-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 15px;
+    }
+
+    .order-detail {
+        text-align: left;
+    }
+
+    .order-detail-label {
+        font-weight: 600;
+        color: #6c757d;
+        margin-bottom: 5px;
+        font-size: 0.9em;
+        text-transform: uppercase;
+    }
+
+    .order-detail-value {
+        color: #2c3e50;
+        font-size: 1em;
+    }
+
+    .details-link {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+    }
+
+ 
+
+  
+    }
+</style>
+<br />
+
+<br/>
+<div class="orders-container "style="text-align:center">
+    <h1 class="page-header pt-5">My Orders</h1>
+    <div class="orders-grid">
+        @foreach (var item in Model)
+        {
+            <div class="order-card">
+                <div class="order-header">
+                    <h3>Order Details</h3>
+                    <a class="details-link" asp-action="Orderline" asp-route-orid="@item.Id">View Details</a>
+                </div>
+                <div class="order-details">
+                    <div class="order-detail">
+                        <div class="order-detail-label">Customer Name</div>
+                        <div class="order-detail-value">@Html.DisplayFor(modelItem => item.custname)</div>
+                    </div>
+                    <div class="order-detail">
+                        <div class="order-detail-label">Total Amount</div>
+                        <div class="order-detail-value">@Html.DisplayFor(modelItem => item.total)</div>
+                    </div>
+                    <div class="order-detail">
+                        <div class="order-detail-label">Order Date</div>
+                        <div class="order-detail-value">@Html.DisplayFor(modelItem => item.orderdate)</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

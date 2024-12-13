@@ -1,0 +1,170 @@
+﻿@model TechnoMobileProject.Models.items
+@{
+    Layout = "_Layout1";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 30px;
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 700px; 
+        }
+
+        .item-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        dl.row dt {
+            font-weight: bold;
+            color: #495057;
+            font-size: 0.9rem; 
+        }
+
+        dl.row dd {
+            color: #6c757d;
+            font-size: 0.9rem; 
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.9rem; 
+        }
+
+        .form-control {
+            font-size: 0.85rem; 
+            padding: 5px 10px; 
+        }
+
+        .btn-success {
+            font-size: 0.85rem; 
+            padding: 5px 15px; 
+        }
+
+            .btn-success:hover {
+                background-color: #218838;
+                border-color: #1e7e34;
+            }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+
+        #tot {
+            font-size: 1rem;
+        }
+
+        img {
+            max-height: 120px;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        @if (ViewData["Error"] != null)
+        {
+            <p class="error-message text-center">@ViewData["Error"]</p>
+        }
+
+        <h4 class="item-title text-center">Item Details</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-4">Name:</dt>
+            <dd class="col-sm-8">@Model.title</dd>
+            <dt class="col-sm-4">Price:</dt>
+            <dd class="col-sm-8">@Model.price Dollar</dd>
+            <dt class="col-sm-4">Discount:</dt>
+            <dd class="col-sm-8">@Model.discount</dd>
+            <dt class="col-sm-4">Category:</dt>
+            <dd class="col-sm-8">
+                @{
+                    var categoryName = Model.category switch
+                    {
+                        1 => "iPhone",
+                        2 => "Samsung",
+                        3 => "Google",
+                        4 => "OnePlus",
+                        5 => "Xiaomi",
+                        6 => "Huawei",
+                        7 => "Oppo",
+                        8 => "Vivo",
+                        9 => "Sony",
+                        10 => "LG",
+                        11 => "Nokia",
+                        12 => "Realme",
+                        13 => "Asus",
+                        14 => "Lenovo",
+                        15 => "Honor",
+                        16 => "BlackBerry",
+                        _ => "Unknown"
+                    };
+                }
+                @categoryName
+            </dd>
+            <dt class="col-sm-4">Image:</dt>
+            <dd class="col-sm-8">
+                <img src="/images/@Model.imgfile" alt="@Model.title" class="img-fluid rounded" />
+            </dd>
+        </dl>
+
+        <form asp-action="cartadd" asp-controller="orders" class="buy-form">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" id="stockQty" value="@Model.bookquantity" />
+            <div class="form-group">
+                <label for="quantity" class="control-label">Quantity</label>
+                <input type="number" name="quantity" class="form-control" id="qu" onchange="getTotalAndValidate()" placeholder="Enter quantity" />
+            </div>
+            <p id="tot" class="text-primary font-weight-bold"></p>
+            <p id="errorMsg" class="text-danger"></p>
+            <div class="text-center">
+                <input type="submit" value="Buy" class="btn btn-success" id="buyBtn" />
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function getTotalAndValidate() {
+            let quantityInput = document.getElementById('qu').value;
+            let price = parseFloat('@Model.price');  
+            let availableStock = parseInt(document.getElementById('stockQty').value);
+            let discount = '@Model.discount' === "yes" ? 0.9 : 1;  
+            let total = 0;
+            let errorMsg = "";
+
+            if (quantityInput && !isNaN(quantityInput)) {
+                let quantity = parseInt(quantityInput);
+                total = quantity * price * discount;
+
+                if (quantity > availableStock) {
+                    errorMsg = "Quantity exceeds available stock.";
+                    document.getElementById("buyBtn").disabled = true;
+                } else {
+                    document.getElementById("buyBtn").disabled = false;
+                }
+            } else {
+                errorMsg = "Please enter a valid quantity.";
+                document.getElementById("buyBtn").disabled = true;
+            }
+
+            document.getElementById("tot").innerHTML = total > 0 ? "Total: " + total.toFixed(2) + " $ " : "";
+            document.getElementById("errorMsg").innerHTML = errorMsg;
+        }
+    </script>
+</body>
+</html>

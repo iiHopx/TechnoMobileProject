@@ -7,7 +7,7 @@ builder.Services.AddDbContext<TechnoMobileProjectContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(1); });
+builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(2); });
 
 var app = builder.Build();
 
@@ -25,6 +25,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=usersaccounts}/{action=login}/{id?}");
 
 app.Run();
