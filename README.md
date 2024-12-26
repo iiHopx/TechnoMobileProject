@@ -119,4 +119,4 @@ Advanced user controls:
 
 
 
-*TechnoMobile - Elevating Mobile Retail Experience* 💫
+*TechnoMobile 💫
