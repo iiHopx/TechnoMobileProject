@@ -1,7 +1,7 @@
 # TechnoMobileProject
 
 ## Overview
-A comprehensive platform providing robust administrative and customer functionalities for managing mobile technology products.
+TechnoMobileProject is a comprehensive platform designed to provide robust administrative and customer functionalities for managing mobile technology products.
 
 ## Pages
 
